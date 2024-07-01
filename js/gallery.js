@@ -68,13 +68,19 @@ const element = document.querySelector("ul.gallery");
 const fragment = document.createDocumentFragment();
 
 images.forEach((image) => {
-  const galleryList = document.createElement("li");
+  const galleryListElement = document.createElement("li");
+  galleryListElement.classList = "gallery-item";
+  const galleryLink = document.createElement("a");
+  galleryLink.classList = "gallery-link";
+  galleryLink.href = image.original;
+  galleryListElement.appendChild(galleryLink);
   const galleryImage = document.createElement("img");
-  galleryList.appendChild(galleryImage);
+  galleryImage.classList = "gallery-image";
   galleryImage.src = image.preview;
-  // galleryImage.data-source = image.original;
   galleryImage.alt = image.description;
-  fragment.appendChild(galleryList);
+  galleryImage.dataset = galleryLink.href; //???
+  galleryLink.appendChild(galleryImage);
+  fragment.appendChild(galleryListElement);
 });
 
 element.appendChild(fragment);
