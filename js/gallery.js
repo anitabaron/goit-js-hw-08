@@ -64,7 +64,17 @@ const images = [
   },
 ];
 
+const instance = basicLightbox.create(`
+    <div class="modal">
+        <div class="modalPhoto">
+          <img width="1112" height="640" src="https://placehold.it/1112x640">
+        </div>
+    </div>
+`);
+
 const element = document.querySelector("ul.gallery");
+element.addEventListener("click", openModal);
+
 const fragment = document.createDocumentFragment();
 
 images.forEach((image) => {
@@ -78,9 +88,31 @@ images.forEach((image) => {
   galleryImage.classList = "gallery-image";
   galleryImage.src = image.preview;
   galleryImage.alt = image.description;
-  galleryImage.dataset = galleryLink.href; //???
+  galleryImage.dataset.source = galleryLink.href;
   galleryLink.appendChild(galleryImage);
   fragment.appendChild(galleryListElement);
 });
-
 element.appendChild(fragment);
+
+// open modal with photo
+function openModal(event) {
+  event.preventDefault();
+  if (event.target.nodeName !== "IMG") {
+    return; // użytkownik kliknął między zdjęciami
+  }
+  let currentModalPhoto = document.querySelector("div.modalPhoto > img");
+  const currentImage = event.target.dataset.source;
+  console.log(currentImage);
+  // currentModalPhoto.src = event.target.dataset.source;
+  instance.show();
+}
+
+// ESC do close
+document.addEventListener("keydown", closeModal);
+
+function closeModal(event) {
+  if (event.keyCode == 27) {
+    instance.close();
+  }
+  // document.removeEventListener("keydown", closeModal);
+}
