@@ -94,11 +94,10 @@ images.forEach((image) => {
 });
 element.appendChild(fragment);
 
-// open modal with photo
 function openModal(event) {
   event.preventDefault();
   if (event.target.nodeName !== "IMG") {
-    return; // użytkownik kliknął między zdjęciami
+    return;
   }
   let currentModalPhoto = document.querySelector("div.modalPhoto > img");
   const currentImage = event.target.dataset.source;
