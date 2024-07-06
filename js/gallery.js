@@ -88,7 +88,7 @@ images.forEach((image) => {
   galleryImage.classList = "gallery-image";
   galleryImage.src = image.preview;
   galleryImage.alt = image.description;
-  galleryImage.dataset.source = galleryLink.href;
+  galleryImage.dataset.source = image.original;
   galleryLink.appendChild(galleryImage);
   fragment.appendChild(galleryListElement);
 });
@@ -99,10 +99,8 @@ function openModal(event) {
   if (event.target.nodeName !== "IMG") {
     return;
   }
-  let currentModalPhoto = document.querySelector("div.modalPhoto > img");
   const currentImage = event.target.dataset.source;
-  console.log(currentImage);
-  // currentModalPhoto.src = event.target.dataset.source;
+  instance.element().querySelector("img").src = currentImage;
   instance.show();
 }
 
@@ -113,5 +111,4 @@ function closeModal(event) {
   if (event.keyCode == 27) {
     instance.close();
   }
-  // document.removeEventListener("keydown", closeModal);
 }
